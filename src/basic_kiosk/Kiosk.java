@@ -13,7 +13,6 @@ public class Kiosk {
         while (true) {
             //카테고리 출력
             Menu.printCategoryMenu(currentCart.getCart().isEmpty());
-
             System.out.print("번호를 입력하세요: ");
             //사용자 입력
             userInput = scanner.nextLine();

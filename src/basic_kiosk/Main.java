@@ -16,9 +16,16 @@ public class Main {
         drinks.add(new MenuItem("Pepsi", 3f, "파란 펩시"));
         drinks.add(new MenuItem("Sprite", 3.1f, "초록 스프라이트"));
 
+        List<MenuItem> appetizers = new ArrayList<>();
+        appetizers.add(new MenuItem("Curly Fries", 3f, "꼬부랑 감자튀김"));
+        appetizers.add(new MenuItem("Onion Rings", 4f, "바삭한 양파 튀김"));
+        appetizers.add(new MenuItem("Chicken Nuggets", 3.2f, "닭 조각"));
+        appetizers.add(new MenuItem("Applesauce", 2.5f, "애플소스 미니컵"));
+
         //Main의 메뉴아이템을 Menu로 넘겨줌
         Menu burger = new Menu(burgers, "Burgers");
         Menu drink = new Menu(drinks, "Drinks");
+        Menu appetizer = new Menu(appetizers, "Appetizers");
 
         //키오스크 시작
         Kiosk kiosk = new Kiosk();
