@@ -25,12 +25,6 @@ public class Kiosk {
             } else if (!currentCart.getCart().isEmpty() && userInput.equals(Integer.toString(menuCategories.size()+1))) {
                 //장바구니 보기
                 inCartManager(currentCart);
-                //TODO: 장바구니 메뉴 (주문하기, 삭제)
-            } else if (userInput.equals(Integer.toString(menuCategories.size()+2))) {
-                /*TODO: 이부분을 장바구니 안 메뉴로 옮겨야 할듯
-                    장바구니에 담긴 모든 항목을 출력
-                    합산하여 총 금액을 계산
-                 */
             } else {
                 //카테고리 숫자: 카테고리 출력
                 try {
@@ -93,19 +87,24 @@ public class Kiosk {
             }
             while(true){
                 System.out.println("[ 총 금액 ]\n" + totalPrice + "원\n\n결제하시겠습니까?\n1. 주문   2. 메뉴판 ");
-                paymentInput = Integer.parseInt(scanner.nextLine());
-                //Y: 결제
-                //N: 카테고리로 돌아가기
-                if (paymentInput == 1) {
-                    //결제 완료 후 장바구니 초기화
-                    System.out.println(totalPrice+ "원 결제 완료!\n");
-                    myCart.getCart().removeAll(myCart.getCart());
-                    break;
-                } else if (paymentInput == 2) {
-                    System.out.println("메뉴판으로 돌아갑니다.\n");
-                    break;
-                } else {
-                    System.out.println("잘못된 명령어입니다.\n");
+                try {
+                    paymentInput = Integer.parseInt(scanner.nextLine());
+                    //Y: 결제
+                    //N: 카테고리로 돌아가기
+                    if (paymentInput == 1) {
+                        //결제 완료 후 장바구니 초기화
+                        System.out.println(totalPrice+ "원 결제 완료!\n");
+                        myCart.getCart().removeAll(myCart.getCart());
+                        break;
+                    } else if (paymentInput == 2) {
+                        System.out.println("메뉴판으로 돌아갑니다.\n");
+                        break;
+                    } else {
+                        System.out.println("잘못된 명령어입니다.\n");
+                    }
+                } catch (NumberFormatException e) {
+                    //문자 입력
+                    System.out.println("번호를 입력해주세요!\n");
                 }
             }
         }
