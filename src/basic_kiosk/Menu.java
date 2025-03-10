@@ -15,19 +15,25 @@ public class Menu {
 
     //카테고리 메뉴 (이름만) 출력 메서드
     public static void printCategoryMenu() {
-        for (String e: categoryNames) {
-            System.out.println((categoryNames.indexOf(e)+1) + ". " +e);
+        System.out.println("[ 카테고리 메뉴 ]\n---------------");
+        for (int i = 0; i<=categoryNames.size(); i++) {
+            if (i == categoryNames.size()) {
+                System.out.println((i+1)+". 장바구니 보기\n---------------");
+            } else {
+                System.out.println((i+1) + ". " +categoryNames.get(i));
+            }
         }
-        System.out.print("0. 종료\n\n");
+        System.out.println("0. 종료\n");
     }
 
     //내부 메뉴 출력 메서드
     public static void printInnerMenu(String userInput) {
         List<MenuItem> currentMenu = menuCategories.get(Integer.parseInt(userInput)-1);
+        System.out.println("---------------");
         for (int i = 0; i < currentMenu.size(); i++) {
             System.out.println((i + 1) + ". " + currentMenu.get(i).getMenuName() + "   | W " + currentMenu.get(i).getMenuPrice() + " | " + currentMenu.get(i).getMenuDesc());
         }
-        System.out.print("0. 뒤로가기\n\n");
+        System.out.println("---------------\n0. 뒤로가기\n");
     }
 
     //내부 메뉴 포함 카테고리 리스트 게터

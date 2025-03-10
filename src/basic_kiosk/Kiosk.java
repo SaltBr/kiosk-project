@@ -8,6 +8,7 @@ public class Kiosk {
         Scanner scanner = new Scanner(System.in);
         String userInput;
         List<List<MenuItem>> menuCategories = Menu.getFullMenu();
+        Cart currentCart = new Cart();
 
         while (true) {
             //카테고리 출력
@@ -20,6 +21,15 @@ public class Kiosk {
             if (userInput.equals("0")) {
                 System.out.println("프로그램을 종료합니다.");
                 System.exit(0);
+            } else if (userInput.equals(Integer.toString(menuCategories.size()+1))) {
+                //장바구니 보기
+                inCartManager(currentCart);
+                //TODO: 장바구니 메뉴 (주문하기, 삭제)
+            } else if (userInput.equals(Integer.toString(menuCategories.size()+2))) {
+                /*TODO: 이부분을 장바구니 안 메뉴로 옮겨야 할듯
+                    장바구니에 담긴 모든 항목을 출력
+                    합산하여 총 금액을 계산
+                 */
             } else {
                 //카테고리 숫자: 카테고리 출력
                 try {
@@ -35,7 +45,11 @@ public class Kiosk {
                             break;
                         } else {
                             try {
+                                //선택한 메뉴 출력 및 카트에 추가
                                 System.out.println("선택한 메뉴: "+currentMenu.get(Integer.parseInt(menuInput) - 1).getMenuName() + "   | W " + currentMenu.get(Integer.parseInt(menuInput) - 1).getMenuPrice() + " | " + currentMenu.get(Integer.parseInt(menuInput) - 1).getMenuDesc() + "\n");
+                                //생성자로 카트 아이템 생성
+                                CartItem cartItem = new CartItem(currentMenu.get(Integer.parseInt(menuInput) - 1).getMenuName(), currentMenu.get(Integer.parseInt(menuInput) - 1).getMenuPrice(), 1);
+                                currentCart.addCartItem(cartItem);
                                 break;
                             } catch (IndexOutOfBoundsException e) {
                                 //메뉴판에 없는 번호 입력
@@ -56,4 +70,15 @@ public class Kiosk {
             }
         }
     }
+
+    public void inCartManager(Cart myCart) {
+        if(myCart.getCart().isEmpty()){
+            System.out.println("장바구니가 비어있습니다.\n");
+        } else {
+            for (CartItem item : myCart.getCart()) {
+                System.out.println(item.getCartMenuName());
+            }
+        }
+    }
+
 }

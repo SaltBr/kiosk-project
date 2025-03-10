@@ -1,9 +1,9 @@
 package basic_kiosk;
 
 public class MenuItem {
+    private final String menuDesc;
     private final String menuName;
     private final float menuPrice;
-    private final String menuDesc;
 
     public MenuItem(String menuName, float menuPrice, String menuDesc){
         this.menuName = menuName;
