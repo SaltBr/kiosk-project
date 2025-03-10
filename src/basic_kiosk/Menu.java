@@ -14,14 +14,13 @@ public class Menu {
     }
 
     //카테고리 메뉴 (이름만) 출력 메서드
-    public static void printCategoryMenu() {
+    public static void printCategoryMenu(boolean empty) {
         System.out.println("[ 카테고리 메뉴 ]\n---------------");
-        for (int i = 0; i<=categoryNames.size(); i++) {
-            if (i == categoryNames.size()) {
-                System.out.println((i+1)+". 장바구니 보기\n---------------");
-            } else {
-                System.out.println((i+1) + ". " +categoryNames.get(i));
-            }
+        for (int i = 0; i<categoryNames.size(); i++) {
+            System.out.println((i+1) + ". " +categoryNames.get(i));
+        }
+        if (!empty) {
+            System.out.println((categoryNames.size()+1)+". 장바구니 보기\n---------------");
         }
         System.out.println("0. 종료\n");
     }

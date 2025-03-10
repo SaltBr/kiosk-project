@@ -6,12 +6,13 @@ public class Kiosk {
     Scanner scanner = new Scanner(System.in);
     public void Start() {
         String userInput;
+        int choiceInput;
         List<List<MenuItem>> menuCategories = Menu.getFullMenu();
         Cart currentCart = new Cart();
 
         while (true) {
             //카테고리 출력
-            Menu.printCategoryMenu();
+            Menu.printCategoryMenu(currentCart.getCart().isEmpty());
 
             System.out.print("번호를 입력하세요: ");
             //사용자 입력
@@ -20,7 +21,9 @@ public class Kiosk {
             if (userInput.equals("0")) {
                 System.out.println("프로그램을 종료합니다.");
                 System.exit(0);
-            } else if (userInput.equals(Integer.toString(menuCategories.size()+1))) {
+                //TODO: 카트 안에 물건이 있을 떄만 장바구니 버튼이 생성되기
+                //TODO: 추가로 3 누르면 예외처리되어야함
+            } else if (!currentCart.getCart().isEmpty() && userInput.equals(Integer.toString(menuCategories.size()+1))) {
                 //장바구니 보기
                 inCartManager(currentCart);
                 //TODO: 장바구니 메뉴 (주문하기, 삭제)
@@ -45,11 +48,19 @@ public class Kiosk {
                         } else {
                             try {
                                 //선택한 메뉴 출력 및 카트에 추가
-                                System.out.println("선택한 메뉴: "+currentMenu.get(Integer.parseInt(menuInput) - 1).getMenuName() + "   | W " + currentMenu.get(Integer.parseInt(menuInput) - 1).getMenuPrice() + " | " + currentMenu.get(Integer.parseInt(menuInput) - 1).getMenuDesc() + "\n");
-                                //생성자로 카트 아이템 생성
-                                CartItem cartItem = new CartItem(currentMenu.get(Integer.parseInt(menuInput) - 1).getMenuName(), currentMenu.get(Integer.parseInt(menuInput) - 1).getMenuPrice(), 1);
-                                currentCart.addCartItem(cartItem);
-                                break;
+                                System.out.println("\n"+currentMenu.get(Integer.parseInt(menuInput) - 1).getMenuName() + "   | W " + currentMenu.get(Integer.parseInt(menuInput) - 1).getMenuPrice() + " | " + currentMenu.get(Integer.parseInt(menuInput) - 1).getMenuDesc());
+                                System.out.println("위 메뉴를 장바구니에 추가하시겠습니까?\n1. 확인    2. 취소");
+                                choiceInput = Integer.parseInt(scanner.nextLine());
+                                if (choiceInput ==1 ) {
+                                    //생성자로 카트 아이템 생성, 카트에 메뉴 추가
+                                    CartItem cartItem = new CartItem(currentMenu.get(Integer.parseInt(menuInput) - 1).getMenuName(), currentMenu.get(Integer.parseInt(menuInput) - 1).getMenuPrice(), 1);
+                                    currentCart.addCartItem(cartItem);
+                                    System.out.println("추가되었습니다.\n");
+                                    break;
+                                } else if (choiceInput ==2) {
+                                    System.out.println("메뉴판으로 돌아갑니다.\n");
+                                    break;
+                                }
                             } catch (IndexOutOfBoundsException e) {
                                 //메뉴판에 없는 번호 입력
                                 System.out.println("잘못된 번호입니다!\n");
@@ -82,7 +93,7 @@ public class Kiosk {
                 totalPrice += priceChanger(item.getCartMenuCount()*item.getCartMenuPrice());
             }
             while(true){
-                System.out.println("[ 총 금액 ] " + totalPrice + "원\n\n결제하시겠습니까?\n1. 주문   2. 메뉴판 ");
+                System.out.println("[ 총 금액 ]\n" + totalPrice + "원\n\n결제하시겠습니까?\n1. 주문   2. 메뉴판 ");
                 paymentInput = Integer.parseInt(scanner.nextLine());
                 //Y: 결제
                 //N: 카테고리로 돌아가기
