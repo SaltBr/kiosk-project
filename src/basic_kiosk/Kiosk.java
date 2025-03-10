@@ -8,14 +8,10 @@ public class Kiosk {
         Scanner scanner = new Scanner(System.in);
         String userInput;
         List<List<MenuItem>> menuCategories = Menu.getFullMenu();
-        List<String> categoryNames = Menu.getCategoryName();
 
         while (true) {
             //카테고리 출력
-            for (String e: categoryNames) {
-                System.out.println((categoryNames.indexOf(e)+1) + ". " +e);
-            }
-            System.out.print("0. 종료\n\n");
+            Menu.printCategoryMenu();
 
             System.out.print("번호를 입력하세요: ");
             //사용자 입력
@@ -27,19 +23,19 @@ public class Kiosk {
             } else {
                 //카테고리 숫자: 카테고리 출력
                 try {
-                    List<MenuItem> currentMenu = menuCategories.get(Integer.parseInt(userInput)-1);
-                    for (int i = 0; i < currentMenu.size(); i++) {
-                        System.out.println((i + 1) + ". " + currentMenu.get(i).menuName + "   | W " + currentMenu.get(i).menuPrice + " | " + currentMenu.get(i).menuDesc);
-                    }
                     while(true) {
-                        System.out.print("0. 뒤로가기\n\n메뉴를 선택하세요: ");
+                        //메뉴 출력
+                        Menu.printInnerMenu(userInput);
+                        List<MenuItem> currentMenu = menuCategories.get(Integer.parseInt(userInput)-1);
+
+                        System.out.print("메뉴를 선택하세요: ");
                         String menuInput = scanner.nextLine();
                         if (menuInput.equals("0")) {
                             System.out.println("카테고리로 이동합니다.");
                             break;
                         } else {
                             try {
-                                System.out.println("선택한 메뉴: "+currentMenu.get(Integer.parseInt(menuInput) - 1).menuName + "   | W " + currentMenu.get(Integer.parseInt(menuInput) - 1).menuPrice + " | " + currentMenu.get(Integer.parseInt(menuInput) - 1).menuDesc + "\n");
+                                System.out.println("선택한 메뉴: "+currentMenu.get(Integer.parseInt(menuInput) - 1).getMenuName() + "   | W " + currentMenu.get(Integer.parseInt(menuInput) - 1).getMenuPrice() + " | " + currentMenu.get(Integer.parseInt(menuInput) - 1).getMenuDesc() + "\n");
                                 break;
                             } catch (IndexOutOfBoundsException e) {
                                 //메뉴판에 없는 번호 입력
