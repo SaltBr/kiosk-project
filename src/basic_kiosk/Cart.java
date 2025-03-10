@@ -9,14 +9,14 @@ public class Cart {
 
     //장바구니에 아이템 추가
     public void addCartItem(CartItem item) {
-        boolean isItem = true;
+        boolean isItem = false;
         for(int i = 0; i< cart.size(); i++){
             //카트에 같은 이름의 아이템이 있다면 개수만 +1
             if ((item.getCartMenuName()).equals(cart.get(i).getCartMenuName())){
                 cart.get(i).addMenuCount();
+                isItem = true;
                 break;
             }
-            isItem = false;
         }
         if(!isItem || cart.isEmpty()){
             //카트에 같은 이름의 아이템이 없다면, 혹은 카트가 비어있다면 이름, 가격, 개수 모두 추가
