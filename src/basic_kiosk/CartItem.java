@@ -19,7 +19,6 @@ public class CartItem {
     //카트 내 메뉴 가격 getter
     public float getCartMenuPrice() {
         return menuPrice;
-        //TODO:개수 곱해서 리턴할 것
     }
 
     //카트 내 메뉴 개수 getter
@@ -28,8 +27,7 @@ public class CartItem {
     }
 
     //카트 내 메뉴 개수 추가
-    public int addMenuCount() {
-        //TODO:메뉴 이름이 있을 경우 count 만 1 추가. 메뉴 넣을 떄 이거 불러오면 됨
-        return menuCount += 1;
+    public void addMenuCount() {
+        menuCount += 1;
     }
 }

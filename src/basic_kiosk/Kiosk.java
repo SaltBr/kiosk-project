@@ -3,9 +3,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Kiosk {
-
+    Scanner scanner = new Scanner(System.in);
     public void Start() {
-        Scanner scanner = new Scanner(System.in);
         String userInput;
         List<List<MenuItem>> menuCategories = Menu.getFullMenu();
         Cart currentCart = new Cart();
@@ -71,14 +70,38 @@ public class Kiosk {
         }
     }
 
+    //카트 출력 및 결제 유도
     public void inCartManager(Cart myCart) {
+        char paymentInput;
+        int totalPrice = 0;
         if(myCart.getCart().isEmpty()){
             System.out.println("장바구니가 비어있습니다.\n");
         } else {
             for (CartItem item : myCart.getCart()) {
-                System.out.println(item.getCartMenuName());
+                System.out.println(item.getCartMenuName() + "  |  " + priceChanger(item.getCartMenuPrice()) + "원 x " + item.getCartMenuCount() + "개  :: 총 " + priceChanger(item.getCartMenuCount()*item.getCartMenuPrice()) + "원");
+                totalPrice += priceChanger(item.getCartMenuCount()*item.getCartMenuPrice());
+            }
+            while(true){
+                System.out.print("총 금액 : " + totalPrice + "원\n결제하시겠습니까? (Y/N) : ");
+                paymentInput = scanner.nextLine().charAt(0);
+                //Y: 결제
+                //N: 카테고리로 돌아가기
+                if (paymentInput =='Y' || paymentInput =='y') {
+                    //결제 완료 후 장바구니 초기화
+                    System.out.println("결제 완료!");
+                    myCart.getCart().removeAll(myCart.getCart());
+                    break;
+                } else if (paymentInput =='N' || paymentInput =='n') {
+                    System.out.println("카테고리 선택창으로 돌아갑니다.\n");
+                    break;
+                } else {
+                    System.out.println("잘못된 명령어입니다.\n");
+                }
             }
         }
     }
-
+    //가격 숫자 변경
+    public int priceChanger(float price) {
+        return Math.round(price*1000);
+    }
 }
