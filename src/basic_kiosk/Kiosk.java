@@ -7,7 +7,6 @@ public class Kiosk {
     InputManager inputManager = new InputManager();
     public void Start() {
         String userInput;
-        int choiceInput;
         List<List<MenuItem>> menuCategories = Menu.getFullMenu();
         Cart currentCart = new Cart();
 
@@ -27,41 +26,8 @@ public class Kiosk {
             } else {
                 //카테고리 숫자: 카테고리 출력
                 try {
-                    while(true) {
-                        //메뉴 출력
-                        Menu.printInnerMenu(userInput);
-                        List<MenuItem> currentMenu = menuCategories.get(Integer.parseInt(userInput)-1);
-
-                        System.out.print("메뉴를 선택하세요: ");
-                        String menuInput = scanner.nextLine();
-                        if (menuInput.equals("0")) {
-                            System.out.println("카테고리로 이동합니다.");
-                            break;
-                        } else {
-                            try {
-                                //선택한 메뉴 출력 및 카트에 추가
-                                System.out.println("\n"+currentMenu.get(Integer.parseInt(menuInput) - 1).getMenuName() + "   | W " + currentMenu.get(Integer.parseInt(menuInput) - 1).getMenuPrice() + " | " + currentMenu.get(Integer.parseInt(menuInput) - 1).getMenuDesc());
-                                System.out.println("위 메뉴를 장바구니에 추가하시겠습니까?\n1. 확인    2. 취소");
-                                choiceInput = Integer.parseInt(scanner.nextLine());
-                                if (choiceInput ==1 ) {
-                                    //생성자로 카트 아이템 생성, 카트에 메뉴 추가
-                                    CartItem cartItem = new CartItem(currentMenu.get(Integer.parseInt(menuInput) - 1).getMenuName(), currentMenu.get(Integer.parseInt(menuInput) - 1).getMenuPrice(), 1);
-                                    currentCart.addCartItem(cartItem);
-                                    System.out.println("추가되었습니다.\n");
-                                    break;
-                                } else if (choiceInput ==2) {
-                                    System.out.println("메뉴판으로 돌아갑니다.\n");
-                                    break;
-                                }
-                            } catch (IndexOutOfBoundsException e) {
-                                //메뉴판에 없는 번호 입력
-                                System.out.println("잘못된 번호입니다!\n");
-                            } catch (NumberFormatException e) {
-                                //문자 입력
-                                System.out.println("번호를 입력해주세요!\n");
-                            }
-                        }
-                    }
+                    //세부 메뉴 입력받기
+                    inputManager.selectFood(userInput, currentCart);
                 } catch (IndexOutOfBoundsException e) {
                     //메뉴판에 없는 번호 입력
                     System.out.println("잘못된 번호입니다!\n");
@@ -91,7 +57,7 @@ public class Kiosk {
                     //Y: 결제
                     //N: 카테고리로 돌아가기
                     if (paymentInput == 1) {
-                        //TODO: 할인 정보 받기
+                        //최종 금액에 할인 적용
                         totalPrice = (int) discountCheck(totalPrice);
                         //결제 완료 후 장바구니 초기화
                         System.out.println(totalPrice+ "원 결제 완료!\n");
@@ -119,7 +85,6 @@ public class Kiosk {
     public float discountCheck (int totalPrice){
         DiscountType discountType = inputManager.discountInput();
         totalPrice *= (int) (1 - (discountType.discount/100.0));
-        System.out.println(totalPrice +" "+discountType);
         return totalPrice;
     }
 }
