@@ -20,8 +20,6 @@ public class Kiosk {
             if (userInput.equals("0")) {
                 System.out.println("프로그램을 종료합니다.");
                 System.exit(0);
-                //TODO: 카트 안에 물건이 있을 떄만 장바구니 버튼이 생성되기
-                //TODO: 추가로 3 누르면 예외처리되어야함
             } else if (!currentCart.getCart().isEmpty() && userInput.equals(Integer.toString(menuCategories.size()+1))) {
                 //장바구니 보기
                 inCartManager(currentCart);
@@ -86,12 +84,13 @@ public class Kiosk {
                 totalPrice += priceChanger(item.getCartMenuCount()*item.getCartMenuPrice());
             }
             while(true){
-                System.out.println("[ 총 금액 ]\n" + totalPrice + "원\n\n결제하시겠습니까?\n1. 주문   2. 메뉴판 ");
+                System.out.println("[ 총 금액 ]\n" + totalPrice + "원\n\n1. 주문   2. 메뉴판 ");
                 try {
                     paymentInput = Integer.parseInt(scanner.nextLine());
                     //Y: 결제
                     //N: 카테고리로 돌아가기
                     if (paymentInput == 1) {
+                        //TODO: 할인 정보 받기
                         //결제 완료 후 장바구니 초기화
                         System.out.println(totalPrice+ "원 결제 완료!\n");
                         myCart.getCart().removeAll(myCart.getCart());
