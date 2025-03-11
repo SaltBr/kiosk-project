@@ -5,7 +5,7 @@ public class InputManager {
     Scanner scanner = new Scanner(System.in);
 
     //유저 입력에 따라 할인 enum 적용
-    public DiscountType DiscountInput() {
+    public DiscountType discountInput() {
         boolean correctDis = false;
         DiscountType discount = DiscountType.DEFAULT;
 

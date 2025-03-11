@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class Kiosk {
     Scanner scanner = new Scanner(System.in);
+    InputManager inputManager = new InputManager();
     public void Start() {
         String userInput;
         int choiceInput;
@@ -91,6 +92,7 @@ public class Kiosk {
                     //N: 카테고리로 돌아가기
                     if (paymentInput == 1) {
                         //TODO: 할인 정보 받기
+                        totalPrice = (int) discountCheck(totalPrice);
                         //결제 완료 후 장바구니 초기화
                         System.out.println(totalPrice+ "원 결제 완료!\n");
                         myCart.getCart().removeAll(myCart.getCart());
@@ -111,5 +113,13 @@ public class Kiosk {
     //가격 숫자 변경
     public int priceChanger(float price) {
         return Math.round(price*1000);
+    }
+
+    //할인 적용 후 최종 금액 리턴
+    public float discountCheck (int totalPrice){
+        DiscountType discountType = inputManager.discountInput();
+        totalPrice *= (int) (1 - (discountType.discount/100.0));
+        System.out.println(totalPrice +" "+discountType);
+        return totalPrice;
     }
 }
