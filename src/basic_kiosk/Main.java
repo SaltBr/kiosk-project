@@ -27,8 +27,15 @@ public class Main {
         Menu drink = new Menu(drinks, "Drinks");
         Menu appetizer = new Menu(appetizers, "Appetizers");
 
+        //Menu를 메뉴 리스트인 newMenu에 넣어줌
+        List<Menu> newMenu = new ArrayList<>();
+        newMenu.add(burger);
+        newMenu.add(drink);
+        newMenu.add(appetizer);
+
         //키오스크 시작
-        Kiosk kiosk = new Kiosk();
+        //생성자로 키오스크를 통해 메뉴를 넘겨줌
+        Kiosk kiosk = new Kiosk(newMenu);
         kiosk.Start();
     }
 }

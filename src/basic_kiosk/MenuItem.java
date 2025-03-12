@@ -1,28 +1,28 @@
 package basic_kiosk;
 
 public class MenuItem {
-    private final String menuDesc;
-    private final String menuName;
-    private final float menuPrice;
+    private final String desc;
+    private final String name;
+    private final float price;
 
-    public MenuItem(String menuName, float menuPrice, String menuDesc){
-        this.menuName = menuName;
-        this.menuPrice = menuPrice;
-        this.menuDesc = menuDesc;
+    public MenuItem(String name, float price, String desc){
+        this.name = name;
+        this.price = price;
+        this.desc = desc;
     }
 
     //메뉴 이름 getter
-    public String getMenuName() {
-        return menuName;
+    public String getName() {
+        return name;
     }
 
     //메뉴 가격 getter
-    public float getMenuPrice() {
-        return menuPrice;
+    public float getPrice() {
+        return price;
     }
 
     //메뉴 설명 getter
-    public String getMenuDesc() {
-        return menuDesc;
+    public String getDesc() {
+        return desc;
     }
 }
