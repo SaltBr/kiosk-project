@@ -1,11 +1,10 @@
 package basic_kiosk;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Kiosk {
-    private List<Menu> newMenu = new ArrayList<>();
-    private InputManager inputManager;
+    private final List<Menu> newMenu;
+    private final InputManager inputManager;
 
 
     public Kiosk (List<Menu> newMenu){
