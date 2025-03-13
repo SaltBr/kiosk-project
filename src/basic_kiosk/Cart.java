@@ -37,7 +37,6 @@ public class Cart {
     //장바구니 리셋
     public void resetCart() {
         cart.removeAll(cart);
-        //워닝 발생 이유?
     }
 
     //장바구니 게터

@@ -7,7 +7,7 @@ public class Kiosk {
     private final InputManager inputManager;
     private final Cart currentCart = new Cart();
 
-
+    //키오스크 생성자로 풀 메뉴와 inputManager 인스턴스를 생성
     public Kiosk (List<Menu> newMenu){
         this.newMenu = newMenu;
         this.inputManager = new InputManager();
@@ -55,7 +55,7 @@ public class Kiosk {
                 //카테고리 숫자: 카테고리 출력
                 try {
                     //세부 메뉴 입력받기
-                    selectFood(userInput, currentCart);
+                    selectFood(userInput);
                 } catch (IndexOutOfBoundsException e) {
                     //메뉴판에 없는 번호 입력
                     System.out.println("잘못된 번호입니다!\n");
@@ -68,7 +68,7 @@ public class Kiosk {
     }
 
     //세부 메뉴 입력받기
-    public void selectFood(String userInput, Cart currentCart) {
+    public void selectFood(String userInput) {
         int choiceInput;
         while (true) {
             //세부 메뉴 출력
@@ -77,7 +77,7 @@ public class Kiosk {
             currentMenu.stream().forEach(s -> System.out.println((currentMenu.indexOf(s)+1) +". " +currentMenu.get(currentMenu.indexOf(s)).getName() + "   | W " + currentMenu.get(currentMenu.indexOf(s)).getPrice() + " | " + currentMenu.get(currentMenu.indexOf(s)).getDesc()));
             System.out.println("---------------\n0. 뒤로가기\n");
 
-
+            //메뉴 입력받기
             System.out.print("메뉴를 선택하세요: ");
             String menuInput = inputManager.getInput();
             if (menuInput.equals("0")) {
