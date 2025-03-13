@@ -24,9 +24,22 @@ public class Cart {
         }
     }
 
+    //장바구니에서 아이템 삭제
+    public void deleteCartItem(String menuName) {
+        List<CartItem> newCart = cart.stream().filter(a -> !a.getCartMenuName().equals(menuName)).toList();
+        resetCart();
+        for(CartItem c : newCart) {
+            addCartItem(c);
+        }
+        System.out.println("삭제되었습니다.\n");
+    }
+
+    //장바구니 리셋
     public void resetCart() {
         cart.removeAll(cart);
+        //워닝 발생 이유?
     }
+
     //장바구니 게터
     public List<CartItem> getCart() {
         return cart;

@@ -1,11 +1,10 @@
 package basic_kiosk;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Menu {
-    private List<MenuItem> category = new ArrayList<>();
-    private String categoryName;
+    private final List<MenuItem> category;
+    private final String categoryName;
 
     //생성자로 카테고리 이름과 메뉴아이템 추가
     public Menu(List<MenuItem> menuItems, String categoryName){

@@ -45,7 +45,7 @@ public class Kiosk {
                         totalPrice += priceChanger(item.getCartMenuCount() * item.getCartMenuPrice());
                     }
                     try {
-                        cartInput(totalPrice, currentCart);
+                        cartInput(totalPrice);
                     } catch (NumberFormatException e) {
                         //문자 입력
                         System.out.println("번호를 입력해주세요!\n");
@@ -98,6 +98,8 @@ public class Kiosk {
                     } else if (choiceInput == 2) {
                         System.out.println("메뉴판으로 돌아갑니다.\n");
                         break;
+                    } else {
+                        System.out.println("다시 시도하세요.");
                     }
                 } catch (IndexOutOfBoundsException e) {
                     //메뉴판에 없는 번호 입력
@@ -141,7 +143,7 @@ public class Kiosk {
         return discount;
     }
 
-    public void cartInput(int totalPrice, Cart myCart) {
+    public void cartInput(int totalPrice) {
         //Y: 결제
         //N: 카테고리로 돌아가기
         while (true) {
@@ -153,7 +155,7 @@ public class Kiosk {
                 totalPrice *= 1 - discountType.discount / 100.0;
                 //결제 완료 후 장바구니 초기화
                 System.out.println(totalPrice + "원 결제 완료!\n");
-                myCart.getCart().removeAll(myCart.getCart());
+                currentCart.getCart().removeAll(currentCart.getCart());
                 break;
             } else if (paymentInput ==2) {
                 //주문 삭제
@@ -174,14 +176,10 @@ public class Kiosk {
                             break;
                         }
                     }
+
                     //메뉴가 있는 경우에만 실행되게
                     if(menuExist){
-                        List<CartItem> newCart = myCart.getCart().stream().filter(a -> !a.getCartMenuName().equals(menuName)).toList();
-                        currentCart.resetCart();
-                        for(CartItem c : newCart) {
-                            currentCart.addCartItem(c);
-                        }
-                        System.out.println("삭제되었습니다.\n");
+                        currentCart.deleteCartItem(menuName);
                         break;
                     } else {
                         System.out.println("잘못된 이름이거나, 메뉴가 존재하지 않습니다.");
