@@ -5,6 +5,7 @@ import java.util.List;
 public class Kiosk {
     private final List<Menu> newMenu;
     private final InputManager inputManager;
+    private final Cart currentCart = new Cart();
 
 
     public Kiosk (List<Menu> newMenu){
@@ -19,8 +20,6 @@ public class Kiosk {
 
     public void selectCategory() {
         String userInput;
-        Cart currentCart = new Cart();
-
         while (true) {
             //카테고리 출력
             newMenu.stream().forEach(s -> System.out.println((newMenu.indexOf(s)+1) +". " +s.getCategoryName()));
@@ -46,7 +45,7 @@ public class Kiosk {
                         totalPrice += priceChanger(item.getCartMenuCount() * item.getCartMenuPrice());
                     }
                     try {
-                        paymentInput(totalPrice, currentCart);
+                        cartInput(totalPrice, currentCart);
                     } catch (NumberFormatException e) {
                         //문자 입력
                         System.out.println("번호를 입력해주세요!\n");
@@ -142,11 +141,11 @@ public class Kiosk {
         return discount;
     }
 
-    public void paymentInput(int totalPrice, Cart myCart) {
+    public void cartInput(int totalPrice, Cart myCart) {
         //Y: 결제
         //N: 카테고리로 돌아가기
         while (true) {
-            System.out.println("[ 총 금액 ]\n" + totalPrice + "원\n\n1. 주문   2. 메뉴판 ");
+            System.out.println("[ 총 금액 ]\n" + totalPrice + "원\n\n1. 주문   2.주문삭제   3. 메뉴판 ");
             int paymentInput = Integer.parseInt(inputManager.getInput());
             if (paymentInput == 1) {
                 //최종 금액에 할인 적용
@@ -156,7 +155,41 @@ public class Kiosk {
                 System.out.println(totalPrice + "원 결제 완료!\n");
                 myCart.getCart().removeAll(myCart.getCart());
                 break;
-            } else if (paymentInput == 2) {
+            } else if (paymentInput ==2) {
+                //주문 삭제
+                while(true) {
+                    boolean menuExist = false;
+                    System.out.print("삭제할 메뉴의 이름 (뒤로가기 0): ");
+                    String menuName = inputManager.getInput();
+
+                    //0을 입력하면 종료
+                    if(menuName.equals("0")){
+                        break;
+                    }
+
+                    //해당 메뉴가 실제로 있는지 확인
+                    for(int i = 0; i<currentCart.getCart().size(); i++){
+                        if(currentCart.getCart().get(i).getCartMenuName().equals(menuName)){
+                            menuExist = true;
+                            break;
+                        }
+                    }
+                    //메뉴가 있는 경우에만 실행되게
+                    if(menuExist){
+                        List<CartItem> newCart = myCart.getCart().stream().filter(a -> !a.getCartMenuName().equals(menuName)).toList();
+                        currentCart.resetCart();
+                        for(CartItem c : newCart) {
+                            currentCart.addCartItem(c);
+                        }
+                        System.out.println("삭제되었습니다.\n");
+                        break;
+                    } else {
+                        System.out.println("잘못된 이름이거나, 메뉴가 존재하지 않습니다.");
+                    }
+                }
+                break;
+            } else if (paymentInput == 3) {
+                //카테고리로 돌아가기
                 System.out.println("메뉴판으로 돌아갑니다.\n");
                 break;
             } else {

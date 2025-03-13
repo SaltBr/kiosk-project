@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Cart {
     //장바구니 리스트
-    List<CartItem> cart = new ArrayList<>();
+    private final List<CartItem> cart = new ArrayList<>();
 
     //장바구니에 아이템 추가
     public void addCartItem(CartItem item) {
@@ -24,6 +24,9 @@ public class Cart {
         }
     }
 
+    public void resetCart() {
+        cart.removeAll(cart);
+    }
     //장바구니 게터
     public List<CartItem> getCart() {
         return cart;
